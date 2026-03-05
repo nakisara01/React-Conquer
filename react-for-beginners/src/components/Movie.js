@@ -8,7 +8,7 @@ function Movie({ id, posterImg, title, overview }) {
       <h2>
         <Link to={`/movie/${id}`}>{title}</Link>
       </h2>
-      <p>{overview}</p>
+      <p>{overview.length > 235 ? `${overview.slice(0,235)}...` : overview}</p>
     </div>
   );
 }
