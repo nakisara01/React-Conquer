@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-function Movie({ posterImg, title, overview }) {
+function Movie({ id, posterImg, title, overview }) {
   return (
     <div>
       <img src={posterImg} alt={title} />
       <h2>
-        <Link to="/movie">{title}</Link>
+        <Link to={`/movie/${id}`}>{title}</Link>
       </h2>
       <p>{overview}</p>
     </div>
@@ -14,12 +14,12 @@ function Movie({ posterImg, title, overview }) {
 }
 
 Movie.propTypes = {
+  id: PropTypes.number.isRequired,
   posterImg: PropTypes.string.isRequired,
   title: PropTypes.string,
   overview: PropTypes.string,
 };
 
 export default Movie;
-
 
 //<a href=""> 형식으로 이동을 할 수도 있지만 이 경우 브라우저가 새로고침됨 but Link는 그렇지 않음!
