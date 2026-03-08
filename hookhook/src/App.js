@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 
-const useTitle = (initialTitle) => {
-  const [title, setTitle] = useState(initialTitle);
-  const updateTitle = () => {
-    const htmlTitle = document.querySelector("title");
-    htmlTitle.innerText = title;
+const useBeforeLeave = (onBefore) => {
+  const handle = (event) => {
+    if (event.clientY <= 0 && typeof onBefore === "function") {
+      console.log(event)
+      onBefore();
+    }
   };
-  useEffect(updateTitle, [title]);
-  return setTitle;
+
+  useEffect(() => {
+    document.addEventListener("mouseleave", handle);
+    return () => document.removeEventListener("mouseleave", handle);
+  }, []);
 };
-
 function App() {
-  const titleUpdater = useTitle("Loading");
-  setTimeout(() => {
-    titleUpdater("Home")
-  }, 3000)
-
+  const begForLife = () => console.log("pls dont leave");
+  useBeforeLeave(begForLife);
   return (
     <div>
-      <h1>hi</h1>
+      <h1>Hello</h1>
     </div>
   );
 }
