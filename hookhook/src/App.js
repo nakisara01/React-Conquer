@@ -1,29 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
+import { useAxios } from "./Hooks/useAxios";
 
-const useBeforeLeave = (onBefore) => {
-  const handle = (event) => {
-    if (event.clientY <= 0 && typeof onBefore === "function") {
-      console.log(event)
-      onBefore();
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener("mouseleave", handle);
-    return () => document.removeEventListener("mouseleave", handle);
-  }, []);
-};
 function App() {
-  const begForLife = () => console.log("pls dont leave");
-  useBeforeLeave(begForLife);
-  return (
-    <div>
-      <h1>Hello</h1>
-    </div>
+  const { loading, data, error, refetch } = useAxios({
+    url: "https://nomad-movies.nomadcoders.workers.dev/movies",
+  });
+  console.log(
+    `Loading: ${loading} \n Error: ${error} \n Data: ${JSON.stringify(data)} `,
   );
+  return <div>
+    <h1>{data && data.status}</h1>
+    <h2>{loading && "Loading"}</h2>
+    <button onClick = {refetch}>Refetch</button>
+  </div>;
 }
 
 export default App;
-
-//useEffect는 ComponentDidMount, ComponentWillUnMount, ComponentDidUpdate이다
